@@ -317,7 +317,7 @@ SELECT pr.subject_id as subject
   , pr.endtime as vent_endtime
 --  , extract(epoch from pr.starttime) as vent_starttime_epoch
 --  , extract(epoch from pr.endtime) as vent_endtime_epoch
-FROM  procedureevents pr
+FROM  mimiciv_icu.procedureevents pr
 WHERE pr.itemid = """ + str(vent_id) + """
 ORDER BY pr.icustay_id, pr.starttime
 """
