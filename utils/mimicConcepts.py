@@ -312,7 +312,7 @@ def ventilation():
     query = """
 SELECT pr.subject_id as subject
   , pr.hadm_id as hadm
-  , pr.icustay_id as icu_stay
+  , pr.stay_id as icu_stay
   , pr.starttime as vent_starttime
   , pr.endtime as vent_endtime
 --  , extract(epoch from pr.starttime) as vent_starttime_epoch
