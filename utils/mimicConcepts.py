@@ -317,7 +317,7 @@ SELECT pr.subject_id as subject
   , pr.endtime as vent_endtime
 --  , extract(epoch from pr.starttime) as vent_starttime_epoch
 --  , extract(epoch from pr.endtime) as vent_endtime_epoch
-FROM  procedureevents_mv pr
+FROM  procedureevents pr
 WHERE pr.itemid = """ + str(vent_id) + """
 ORDER BY pr.icustay_id, pr.starttime
 """
@@ -1703,7 +1703,7 @@ and itemid in
 )
 group by icustay_id, charttime
 UNION
--- add in the extubation flags from procedureevents_mv
+-- add in the extubation flags from procedureevents
 -- note that we only need the start time for the extubation
 -- (extubation is always charted as ending 1 minute after it started)
 select
@@ -1712,7 +1712,7 @@ select
   , 0 as OxygenTherapy
   , 1 as Extubated
   , case when itemid = 225468 then 1 else 0 end as SelfExtubated
-from procedureevents_mv
+from procedureevents
 where itemid in
 (
   227194 -- "Extubation"
