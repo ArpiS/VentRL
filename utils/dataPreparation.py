@@ -41,7 +41,7 @@ def generateTables(save=False, savepath='../processed_data/allTables.pkl'):
     adms_table = adms_table[adms_table.hadm.isin(vent_table.hadm.unique()) & (adms_table.h_exp==0)]
     cohort_hadms = adms_table.hadm.unique()
     cohort_stays = adms_table.icustay.unique()
-    print '# Unique icu stays:', len(cohort_stays), '| # Unique hadms:', len(cohort_hadms)
+    print('# Unique icu stays:', len(cohort_stays), '| # Unique hadms:', len(cohort_hadms))
     
     vent_table = vent_table[vent_table.hadm.isin(cohort_hadms)]
     vitals_table = mc.charts(cohort_hadms, vitals_list)
