@@ -35,7 +35,7 @@ def admissions():
 SELECT DISTINCT on (ie.icustay_id)
     ad.subject_id as subject
   , ad.hadm_id as hadm
-  , ie.icustay_id as icustay
+  , ie.stay_id as icustay
   , ROUND( (CAST(EXTRACT(epoch FROM ad.admittime - pa.dob)/(60*60*24*365.242) AS numeric)), 1) AS age
   , pa.gender
   , ad.ethnicity as ethnicity
@@ -68,10 +68,10 @@ SELECT DISTINCT on (ie.icustay_id)
 --  , pa.dob as dob
 --  , pa.dod as dod
 --
-FROM admissions ad
-INNER JOIN icustays ie
+FROM mimiciv_hosp.admissions ad
+INNER JOIN mimiciv_icu.icustays ie
 ON ad.hadm_id = ie.hadm_id
-INNER JOIN patients pa
+INNER JOIN mimiciv_hosp.patients pa
 ON ad.subject_id = pa.subject_id
 WHERE ad.has_chartevents_data = 1
 -- ORDER BY ad.subject_id, ad.admittime, ie.inttime
@@ -319,7 +319,7 @@ SELECT pr.subject_id as subject
 --  , extract(epoch from pr.endtime) as vent_endtime_epoch
 FROM  mimiciv_icu.procedureevents pr
 WHERE pr.itemid = """ + str(vent_id) + """
-ORDER BY pr.icustay_id, pr.starttime
+ORDER BY pr.stay_id, pr.starttime
 """
     
     return q(query).drop_duplicates().dropna()
