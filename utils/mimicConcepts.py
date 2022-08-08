@@ -11,17 +11,20 @@ import psycopg2
 import pandas as pd
 
 # Create a database connection (**changing sql database credentials as appropriate**)
-sqluser = 'bee_mimic_admin'
-dbname = 'bee_mimic'
-schema_name = 'mimiciii'
-sqlpwd = "2OKF0dr@czOrD0suS4GyN"
-con = psycopg2.connect(dbname=dbname, user=sqluser, password=sqlpwd)
+sqluser = 'postgres'
+dbname = 'mimiciv'
+schema_name = 'mimiciv'
+sqlpwd = "mimicgcp"
+host='127.0.0.1'
+port=5432
+
+con = psycopg2.connect(dbname=dbname, user=sqluser, password=sqlpwd, host=host, port=port)
 cur = con.cursor()
 cur.execute('SET search_path to ' + schema_name)
 
 def q(query):
     # Query function
-    con = psycopg2.connect(dbname=dbname, user=sqluser, password=sqlpwd)
+    con = psycopg2.connect(dbname=dbname, user=sqluser, password=sqlpwd, host=host, port=port)
     cur = con.cursor()
     cur.execute('SET search_path to ' + schema_name)
     return pd.read_sql_query(query,con)
